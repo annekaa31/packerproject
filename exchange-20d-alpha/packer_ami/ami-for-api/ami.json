@@ -1,0 +1,39 @@
+{
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "{{user `ami_region`}}",
+      "ami_name": "{{user `ami_name`}}-{{user `version`}}",
+      "source_ami": "{{user `ami_id`}}",
+      "instance_type": "{{user `instance_type`}}",
+      "ssh_username": "{{user `username`}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "../../api",
+      "destination": "/home/ec2-user"
+    },
+    {
+      "type": "file",
+      "source": "bootstrap/bootstrap.sh",
+      "destination": "/home/ec2-user/bootstrap.sh"
+    },
+    {
+      "type": "file",
+      "source": "systemd/exchange_api.service",
+      "destination": "/tmp/exchange_api.service"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo cp /tmp/exchange_api.service /etc/systemd/system/exchange_api.service"
+      ]
+    },
+    {
+      "type": "shell",
+      "script": "install.sh"
+    }
+  ]
+}

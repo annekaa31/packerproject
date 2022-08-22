@@ -1,0 +1,8 @@
+{
+  "ami_region": "us-east-1",
+  "ami_name": "api-image",
+  "version": "1.1",
+  "ami_id": "ami-0d5eff06f840b45e9",
+  "instance_type": "t2.micro",
+  "username": "ec2-user"
+}
